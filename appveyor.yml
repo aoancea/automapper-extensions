@@ -1,0 +1,13 @@
+version: 1.0.{build}
+
+branches:
+  # whitelist 
+  only:
+    - master
+
+test:
+  assemblies:
+    - '**\*.UnitTesting.dll'
+
+before_build:
+  - nuget restore src\AutoMapper.ExtensionsDecorator.sln
