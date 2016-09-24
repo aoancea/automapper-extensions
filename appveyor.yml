@@ -10,4 +10,4 @@ test:
     - '**\*.UnitTesting.dll'
 
 before_build:
-  - nuget restore src\AutoMapper.ExtensionsDecorator.sln
+  - nuget restore src\AutoMapper.Extensions.sln
