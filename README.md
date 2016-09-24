@@ -1,3 +1,5 @@
+[![Build status](https://ci.appveyor.com/api/projects/status/v331slvpqfff9o33/branch/master?svg=true)](https://ci.appveyor.com/project/aoancea/automapper-extensions/branch/master)
+
 # automapper-extensions
 Alpha version of a runtime mapping configuration for AutoMapper
 
