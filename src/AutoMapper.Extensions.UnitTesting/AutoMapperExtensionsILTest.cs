@@ -1,12 +1,11 @@
-﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 using System.Collections.Generic;
 
 namespace AutoMapper.Extensions.UnitTesting
 {
 	[TestClass]
-	[Ignore]
-	public class AutoMapperExtensionsTest
+	public class AutoMapperExtensionsILTest
 	{
 		[TestMethod]
 		public void DeepCopyTo_SourceAndDestinationTypeAreTheSame_DestinationCopied()
@@ -21,7 +20,7 @@ namespace AutoMapper.Extensions.UnitTesting
 				String = "123"
 			};
 
-			Cow destination = source.DeepCopyTo<Cow>();
+			Cow destination = source.ILDeepCopyFromTo<Cow, Cow>();
 
 			Assert.AreNotEqual(source, destination);
 			Assert.AreEqual(true, destination.Bool);
@@ -45,10 +44,7 @@ namespace AutoMapper.Extensions.UnitTesting
 				String = "123"
 			};
 
-			//((AutoMapper.IProfileConfiguration)AutoMapper.Extensions.AutoMapperExtensions.config).CreateTypeDetails(typeof(Cow));
-			//((AutoMapper.IProfileConfiguration)AutoMapper.Extensions.AutoMapperExtensions.config).CreateTypeDetails(typeof(Mule));
-
-			Mule destination = source.DeepCopyTo<Mule>();
+			Mule destination = source.ILDeepCopyFromTo<Cow, Mule>();
 
 			Assert.AreNotEqual(source, destination);
 			Assert.AreEqual(true, destination.Bool);
@@ -75,7 +71,7 @@ namespace AutoMapper.Extensions.UnitTesting
 				}
 			};
 
-			Cow[] destination = source.DeepCopyTo<Cow[]>();
+			Cow[] destination = source.ILDeepCopyFromTo< Cow[], Cow[]>();
 
 			Assert.AreNotEqual(source, destination);
 			Assert.AreEqual(1, destination.Length);
@@ -104,7 +100,7 @@ namespace AutoMapper.Extensions.UnitTesting
 				}
 			};
 
-			Mule[] destination = source.DeepCopyTo<Mule[]>();
+			Mule[] destination = source.ILDeepCopyFromTo<Cow[], Mule[]>();
 
 			Assert.AreNotEqual(source, destination);
 			Assert.AreEqual(1, destination.Length);
@@ -133,7 +129,7 @@ namespace AutoMapper.Extensions.UnitTesting
 				}
 			};
 
-			List<Cow> destination = source.DeepCopyTo<List<Cow>>();
+			List<Cow> destination = source.ILDeepCopyFromTo<List<Cow>, List<Cow>>();
 
 			Assert.AreNotEqual(source, destination);
 			Assert.AreEqual(1, destination.Count);
@@ -162,7 +158,7 @@ namespace AutoMapper.Extensions.UnitTesting
 				}
 			};
 
-			List<Mule> destination = source.DeepCopyTo<List<Mule>>();
+			List<Mule> destination = source.ILDeepCopyFromTo<List<Cow>, List<Mule>>();
 
 			Assert.AreNotEqual(source, destination);
 			Assert.AreEqual(1, destination.Count);
@@ -191,7 +187,7 @@ namespace AutoMapper.Extensions.UnitTesting
 				}
 			};
 
-			List<Cow> destination = source.DeepCopyTo<List<Cow>>();
+			List<Cow> destination = source.ILDeepCopyFromTo<Cow[], List<Cow>>();
 
 			Assert.AreNotEqual(source, destination);
 			Assert.AreEqual(1, destination.Count);
@@ -220,7 +216,7 @@ namespace AutoMapper.Extensions.UnitTesting
 				}
 			};
 
-			List<Mule> destination = source.DeepCopyTo<List<Mule>>();
+			List<Mule> destination = source.ILDeepCopyFromTo<Cow[], List<Mule>>();
 
 			Assert.AreNotEqual(source, destination);
 			Assert.AreEqual(1, destination.Count);
@@ -249,7 +245,7 @@ namespace AutoMapper.Extensions.UnitTesting
 				}
 			};
 
-			Cow[] destination = source.DeepCopyTo<Cow[]>();
+			Cow[] destination = source.ILDeepCopyFromTo<List<Cow>, Cow[]>();
 
 			Assert.AreNotEqual(source, destination);
 			Assert.AreEqual(1, destination.Length);
@@ -278,7 +274,7 @@ namespace AutoMapper.Extensions.UnitTesting
 				}
 			};
 
-			Mule[] destination = source.DeepCopyTo<Mule[]>();
+			Mule[] destination = source.ILDeepCopyFromTo<List<Cow>, Mule[]>();
 
 			Assert.AreNotEqual(source, destination);
 			Assert.AreEqual(1, destination.Length);
@@ -362,7 +358,7 @@ namespace AutoMapper.Extensions.UnitTesting
 				}
 			};
 
-			B.BigClass destination = source.DeepCopyTo<B.BigClass>();
+			B.BigClass destination = source.ILDeepCopyFromTo<A.BigClass, B.BigClass>();
 
 			Assert.AreNotEqual(source, destination);
 			Assert.AreEqual(true, destination.Bool);
@@ -492,7 +488,7 @@ namespace AutoMapper.Extensions.UnitTesting
 				}
 			};
 
-			A.BigClass destination = source.DeepCopyTo<A.BigClass>();
+			A.BigClass destination = source.ILDeepCopyFromTo<A.BigClass, A.BigClass>();
 
 			Assert.AreNotEqual(source, destination);
 			Assert.AreEqual(true, destination.Bool);
@@ -574,7 +570,7 @@ namespace AutoMapper.Extensions.UnitTesting
 				}
 			};
 
-			A.CircularReference destination = source.DeepCopyTo<A.CircularReference>();
+			A.CircularReference destination = source.ILDeepCopyFromTo<A.CircularReference, A.CircularReference>();
 
 			Assert.AreNotEqual(source, destination);
 			Assert.AreEqual(true, destination.Bool);
@@ -618,7 +614,7 @@ namespace AutoMapper.Extensions.UnitTesting
 				}
 			};
 
-			B.CircularReference destination = source.DeepCopyTo<B.CircularReference>();
+			B.CircularReference destination = source.ILDeepCopyFromTo<A.CircularReference, B.CircularReference>();
 
 			Assert.AreNotEqual(source, destination);
 			Assert.AreEqual(true, destination.Bool);
@@ -638,310 +634,5 @@ namespace AutoMapper.Extensions.UnitTesting
 
 			Assert.IsNull(destination.CircularReferenceProperty.CircularReferenceProperty);
 		}
-	}
-
-	internal class Cow
-	{
-		public int Int { get; set; }
-
-		public decimal Decimal { get; set; }
-
-		public string String { get; set; }
-
-		public DateTime DateTime { get; set; }
-
-		public Guid Guid { get; set; }
-
-		public bool Bool { get; set; }
-	}
-
-
-	internal class Mule
-	{
-		public int Int { get; set; }
-
-		public decimal Decimal { get; set; }
-
-		public string String { get; set; }
-
-		public DateTime DateTime { get; set; }
-
-		public Guid Guid { get; set; }
-
-		public bool Bool { get; set; }
-	}
-}
-
-namespace A
-{
-	internal class BigClass
-	{
-		public int Int { get; set; }
-
-		public decimal Decimal { get; set; }
-
-		public string String { get; set; }
-
-		public DateTime DateTime { get; set; }
-
-		public Guid Guid { get; set; }
-
-		public bool Bool { get; set; }
-
-		public FirstClass FirstClass { get; set; }
-
-		public SecondClass SecondClass { get; set; }
-	}
-
-	internal class FirstClass
-	{
-		public int Int { get; set; }
-
-		public decimal Decimal { get; set; }
-
-		public string String { get; set; }
-
-		public DateTime DateTime { get; set; }
-
-		public Guid Guid { get; set; }
-
-		public bool Bool { get; set; }
-
-		public FirstClassFirstSubClass FirstClassFirstSubClass { get; set; }
-
-		public FirstClassSecondSubClass FirstClassSecondSubClass { get; set; }
-	}
-
-	internal class FirstClassFirstSubClass
-	{
-		public int Int { get; set; }
-
-		public decimal Decimal { get; set; }
-
-		public string String { get; set; }
-
-		public DateTime DateTime { get; set; }
-
-		public Guid Guid { get; set; }
-
-		public bool Bool { get; set; }
-	}
-
-	internal class FirstClassSecondSubClass
-	{
-		public int Int { get; set; }
-
-		public decimal Decimal { get; set; }
-
-		public string String { get; set; }
-
-		public DateTime DateTime { get; set; }
-
-		public Guid Guid { get; set; }
-
-		public bool Bool { get; set; }
-	}
-
-	internal class SecondClass
-	{
-		public int Int { get; set; }
-
-		public decimal Decimal { get; set; }
-
-		public string String { get; set; }
-
-		public DateTime DateTime { get; set; }
-
-		public Guid Guid { get; set; }
-
-		public bool Bool { get; set; }
-
-		public SecondClassFirstSubClass SecondClassFirstSubClass { get; set; }
-
-		public SecondClassSecondSubClass SecondClassSecondSubClass { get; set; }
-	}
-
-	internal class SecondClassFirstSubClass
-	{
-		public int Int { get; set; }
-
-		public decimal Decimal { get; set; }
-
-		public string String { get; set; }
-
-		public DateTime DateTime { get; set; }
-
-		public Guid Guid { get; set; }
-
-		public bool Bool { get; set; }
-	}
-
-	internal class SecondClassSecondSubClass
-	{
-		public int Int { get; set; }
-
-		public decimal Decimal { get; set; }
-
-		public string String { get; set; }
-
-		public DateTime DateTime { get; set; }
-
-		public Guid Guid { get; set; }
-
-		public bool Bool { get; set; }
-	}
-
-	internal class CircularReference
-	{
-		public int Int { get; set; }
-
-		public decimal Decimal { get; set; }
-
-		public string String { get; set; }
-
-		public DateTime DateTime { get; set; }
-
-		public Guid Guid { get; set; }
-
-		public bool Bool { get; set; }
-
-		public CircularReference CircularReferenceProperty { get; set; }
-	}
-}
-
-namespace B
-{
-	internal class BigClass
-	{
-		public int Int { get; set; }
-
-		public decimal Decimal { get; set; }
-
-		public string String { get; set; }
-
-		public DateTime DateTime { get; set; }
-
-		public Guid Guid { get; set; }
-
-		public bool Bool { get; set; }
-
-		public FirstClass FirstClass { get; set; }
-
-		public SecondClass SecondClass { get; set; }
-	}
-
-	internal class FirstClass
-	{
-		public int Int { get; set; }
-
-		public decimal Decimal { get; set; }
-
-		public string String { get; set; }
-
-		public DateTime DateTime { get; set; }
-
-		public Guid Guid { get; set; }
-
-		public bool Bool { get; set; }
-
-		public FirstClassFirstSubClass FirstClassFirstSubClass { get; set; }
-
-		public FirstClassSecondSubClass FirstClassSecondSubClass { get; set; }
-	}
-
-	internal class FirstClassFirstSubClass
-	{
-		public int Int { get; set; }
-
-		public decimal Decimal { get; set; }
-
-		public string String { get; set; }
-
-		public DateTime DateTime { get; set; }
-
-		public Guid Guid { get; set; }
-
-		public bool Bool { get; set; }
-	}
-
-	internal class FirstClassSecondSubClass
-	{
-		public int Int { get; set; }
-
-		public decimal Decimal { get; set; }
-
-		public string String { get; set; }
-
-		public DateTime DateTime { get; set; }
-
-		public Guid Guid { get; set; }
-
-		public bool Bool { get; set; }
-	}
-
-	internal class SecondClass
-	{
-		public int Int { get; set; }
-
-		public decimal Decimal { get; set; }
-
-		public string String { get; set; }
-
-		public DateTime DateTime { get; set; }
-
-		public Guid Guid { get; set; }
-
-		public bool Bool { get; set; }
-
-		public SecondClassFirstSubClass SecondClassFirstSubClass { get; set; }
-
-		public SecondClassSecondSubClass SecondClassSecondSubClass { get; set; }
-	}
-
-	internal class SecondClassFirstSubClass
-	{
-		public int Int { get; set; }
-
-		public decimal Decimal { get; set; }
-
-		public string String { get; set; }
-
-		public DateTime DateTime { get; set; }
-
-		public Guid Guid { get; set; }
-
-		public bool Bool { get; set; }
-	}
-
-	internal class SecondClassSecondSubClass
-	{
-		public int Int { get; set; }
-
-		public decimal Decimal { get; set; }
-
-		public string String { get; set; }
-
-		public DateTime DateTime { get; set; }
-
-		public Guid Guid { get; set; }
-
-		public bool Bool { get; set; }
-	}
-
-	internal class CircularReference
-	{
-		public int Int { get; set; }
-
-		public decimal Decimal { get; set; }
-
-		public string String { get; set; }
-
-		public DateTime DateTime { get; set; }
-
-		public Guid Guid { get; set; }
-
-		public bool Bool { get; set; }
-
-		public CircularReference CircularReferenceProperty { get; set; }
 	}
 }
